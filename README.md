@@ -1,7 +1,7 @@
 # C# Synchronous MySQL Wrapper
 
 ### Installation
-Get [MySql.Data](https://www.nuget.org/packages/MySql.Data/) from Nuget and palce MySql.cs into your project folder.
+Get [MySql.Data](https://www.nuget.org/packages/MySql.Data/) from Nuget and palce [MySql.cs](https://github.com/KillStr3aK/Nexd.MySql/blob/main/MySql.cs) into your project folder.
 
 ### Initialization
 ```c#
