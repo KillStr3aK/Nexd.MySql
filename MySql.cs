@@ -61,7 +61,13 @@
                 this.List.Add(column, new Dictionary<string, string> { [expression] = value });
             } else
             {
-                this.List[column].Add(expression, value);
+                if (!this.List[column].ContainsKey(expression))
+                {
+                    this.List[column].Add(expression, value);
+                } else
+                {
+                    throw new ArgumentException($"A condition with the same expression has already been added. Condition: {column} {expression} {value}");
+                }
             }
 
             return this;
@@ -122,7 +128,7 @@
             => $"Server={this.Hostname};Database={this.Database};port={this.Port};User Id={this.Username};password={this.Password};SslMode={this.SSLMode};";
     }
 
-    public class MySql
+    public class MySql : IDisposable
     {
         private MySqlConnection Connection { get; set; }
 
@@ -205,13 +211,16 @@
         public void Ping()
             => this.Connection.Ping();
 
+        public void Dispose()
+            => this.Connection.Close();
+
         private MySqlQueryResult ExecuteQuery()
         {
             Dictionary<int, Dictionary<string, string>> result = new Dictionary<int, Dictionary<string, string>>();
 
             using (MySqlCommand cmd = new MySqlCommand(this.Query, this.Connection))
             {
-                using(MySqlDataReader reader = cmd.ExecuteReader())
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {
