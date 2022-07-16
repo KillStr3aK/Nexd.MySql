@@ -1,4 +1,4 @@
-﻿namespace Nexd.MySql
+namespace Nexd.MySql
 {
     using System;
     using System.Data;
@@ -118,6 +118,14 @@
         public int Port { get; set; } = 3306;
 
         public string SSLMode { get; set; } = "none";
+
+        public MySqlConfig()
+            { }
+
+        public MySqlConfig(string hostname, string database, string username, string password)
+        {
+            this.Hostname = hostname; this.Database = database; this.Username = username; this.Password = password;
+        }
 
         public MySqlConfig(string hostname, string database, string username, string password, int port, string sslmode)
         {
